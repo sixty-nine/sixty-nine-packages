@@ -1,0 +1,87 @@
+{
+  "name": "@sixty-nine-packages/lib",
+  "version": "0.0.3",
+  "description": "Sixty-Nine node library",
+  "author": "Daniele Barsotti",
+  "license": "Unlicense",
+  "main": "build/src/index.js",
+  "typings": "build/src/index.d.ts",
+  "keywords": [],
+  "scripts": {
+    "describe": "npm-scripts-info",
+    "build": "run-s clean && run-p build:*",
+    "build:main": "tsc -p tsconfig.json",
+    "fix": "run-s fix:*",
+    "fix:prettier": "prettier \"src/**/*.ts\" --write",
+    "fix:tslint": "tslint --fix --project .",
+    "test": "run-s build test:unit",
+    "test:lint": "tslint --project .",
+    "test:unit": "nyc --silent ava --verbose",
+    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "cov": "run-s build test:unit cov:html && opn coverage/index.html",
+    "cov:html": "nyc report --reporter=html",
+    "cov:check": "nyc report && nyc check-coverage --lines 60 --functions 60 --branches 60",
+    "doc": "run-s doc:html && opn build/docs/index.html",
+    "doc:html": "typedoc src/ --exclude '**/tests/**/*.ts' --excludePrivate --excludeProtected --target ES6 --mode file --out build/docs",
+    "doc:json": "typedoc src/ --exclude '**/tests/**/*.ts' --excludePrivate --excludeProtected --target ES6 --mode file --json build/docs/typedoc.json",
+    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
+    "version": "standard-version",
+    "reset": "git clean -dfx && git reset --hard && yarn",
+    "clean": "trash build test",
+    "all": "run-s reset test cov:check doc:html",
+    "prepare-release": "run-s all version doc:publish",
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('@sixty-nine-packages/cache must be installed with Yarn: https://yarnpkg.com/')\""
+  },
+  "scripts-info": {
+    "info": "Display information about the package scripts",
+    "build": "Clean and rebuild the project",
+    "fix": "Try to automatically fix any linting problems",
+    "test": "Lint and unit test the project",
+    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
+    "cov": "Rebuild, run tests, then create and open the coverage report",
+    "doc": "Generate HTML API documentation and open it in a browser",
+    "doc:json": "Generate API documentation in typedoc JSON format",
+    "version": "Bump package.json version, update CHANGELOG.md, tag release",
+    "reset": "Delete all untracked files and reset the repo to the last commit",
+    "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
+  },
+  "engines": {
+    "node": ">=8.9"
+  },
+  "dependencies": {
+    "@sixty-nine-packages/logger": "file:../logger",
+    "dotenv": "^6.2.0",
+    "entities": "^1.1.2",
+    "find-file-up": "^2.0.1",
+    "htmlparser": "^1.7.7",
+    "intel": "^1.2.0",
+    "node-fetch": "^2.3.0",
+    "redis": "^2.8.0",
+    "soupselect": "^0.2.0",
+    "chalk": "^2.4.2",
+    "minimist": "^1.2.0"
+  },
+  "ava": {
+    "failFast": true,
+    "files": [
+      "build/**/*.spec.js"
+    ],
+    "sources": [
+      "build/**/*.js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "nyc": {
+    "exclude": [
+      "build/*/tests",
+      "**/*.spec.js"
+    ]
+  }
+}
