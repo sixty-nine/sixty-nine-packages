@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-
-import { App, CLIInput, DefaultFormatter, StringOutput } from '@sixty-nine-packages/console';
+import Lib from '@sixty-nine-packages/lib/src';
 import WeatherCommand from './WeatherCommand';
 import HelloCommand from './HelloCommand';
 import LyricsSearchCommand from './LyricsSearchCommand';
@@ -8,8 +7,8 @@ import LyricsFetchCommand from './LyricsFetchCommand';
 
 (() => {
 
-  const input = new CLIInput();
-  const output = new StringOutput();
+  const input = new Lib.console.CLIInput();
+  const output = new Lib.console.StringOutput();
 
   const app = new App('My App', 'A demo application');
   app.add(new WeatherCommand());
@@ -18,7 +17,7 @@ import LyricsFetchCommand from './LyricsFetchCommand';
   app.add(new LyricsFetchCommand());
 
   app.run(input, output).finally(() => {
-    const f = new DefaultFormatter();
+    const f = new Lib.console.DefaultFormatter();
     console.log(f.format(output.content));
     process.exit(0);
   });

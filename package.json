@@ -27,11 +27,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@sixty-nine-packages/cache": "file:packages/cache",
-    "@sixty-nine-packages/console": "file:packages/console",
-    "@sixty-nine-packages/crawler": "file:packages/crawler",
     "@sixty-nine-packages/lib": "file:packages/lib",
-    "@sixty-nine-packages/logger": "file:packages/logger",
     "@sixty-nine-packages/test-app": "file:packages/test-app"
   },
   "scripts": {

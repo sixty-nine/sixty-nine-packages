@@ -1,16 +1,16 @@
-import { Command, InputInterface, OutputInterface, Argument, Option } from '@sixty-nine-packages/console';
+import Lib from '@sixty-nine-packages/lib/src';
 import node_fetch from 'node-fetch';
 
-export default class WeatherCommand extends Command {
+export default class WeatherCommand extends Lib.console.Command {
 
   constructor() {
     super('weather', 'Show weather forecast');
-    this.addArgument(new Argument('city', 'Show weather for this city', Argument.ARGUMENT_REQUIRED));
-    this.addOption(new Option('format', 'Output format (1-4)'));
-    this.addOption(new Option('forecast', 'Show 3 days forecast', Option.OPTION_BOOLEAN));
+    this.addArgument(new Lib.console.Argument('city', 'Show weather for this city', Lib.console.Argument.ARGUMENT_REQUIRED));
+    this.addOption(new Lib.console.Option('format', 'Output format (1-4)'));
+    this.addOption(new Lib.console.Option('forecast', 'Show 3 days forecast', Lib.console.Option.OPTION_BOOLEAN));
   }
 
-  public execute = async (input: InputInterface, output: OutputInterface): Promise<void> => {
+  public execute = async (input: Lib.console.InputInterface, output: Lib.console.OutputInterface): Promise<void> => {
     const city = input.getFirstArgument();
     const format = input.getOption('format', '4');
     const forecast = input.getOption('forecast', false);

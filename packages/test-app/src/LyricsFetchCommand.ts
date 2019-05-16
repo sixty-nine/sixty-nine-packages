@@ -1,20 +1,17 @@
-import { Command, InputInterface, OutputInterface, Argument } from '@sixty-nine-packages/console';
-import { ArrayLogger } from '@sixty-nine-packages/logger';
-import { CachedWikiLyrics } from '@sixty-nine-packages/crawler';
-import { RedisCacheStorage } from '@sixty-nine-packages/cache';
+import Lib from '@sixty-nine-packages/lib/src';
 
-export default class LyricsFetchCommand extends Command {
+export default class LyricsFetchCommand extends Lib.console.Command {
 
   constructor() {
     super('lyrics:fetch', 'Fetch song lyrics');
-    this.addArgument(new Argument('url', 'The lyrics URL', Argument.ARGUMENT_REQUIRED));
+    this.addArgument(new Lib.console.Argument('url', 'The lyrics URL', Lib.console.Argument.ARGUMENT_REQUIRED));
   }
 
-  public execute = async (input: InputInterface, output: OutputInterface): Promise<void> => {
+  public execute = async (input: Lib.console.InputInterface, output: Lib.console.OutputInterface): Promise<void> => {
     const url = input.getFirstArgument();
-    const storage = new RedisCacheStorage();
-    const logger= new ArrayLogger();
-    const service = new CachedWikiLyrics(storage, logger);
+    const storage = new Lib.cache.storage.RedisCacheStorage();
+    const logger= new Lib.logger.ArrayLogger();
+    const service = new Lib.crawler.CachedWikiLyrics(storage, logger);
     const res = await service.fetchLyrics(url);
 
     output.writeLn(res);

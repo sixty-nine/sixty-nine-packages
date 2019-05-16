@@ -2,7 +2,7 @@
 import test from 'ava';
 import Cache from '../../src/cache/Cache';
 import SimpleCacheStorage from '../../src/cache/storage/SimpleCacheStorage';
-import { ArrayLogger } from '@sixty-nine-packages/logger';
+import ArrayLogger from '../../src/logger/ArrayLogger';
 import { identHasher } from '../../src/cache/Hasher';
 
 const fn = async (s: string): Promise<string> => new Promise(resolve => resolve('-->' + s));

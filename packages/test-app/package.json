@@ -52,10 +52,7 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "@sixty-nine-packages/cache": "file:../cache",
-    "@sixty-nine-packages/console": "file:../console",
-    "@sixty-nine-packages/crawler": "file:../crawler",
-    "@sixty-nine-packages/logger": "file:../logger",
+    "@sixty-nine-packages/lib": "file:../lib",
     "node-fetch": "^2.3.0"
   },
   "ava": {
